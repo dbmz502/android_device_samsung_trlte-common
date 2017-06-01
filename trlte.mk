@@ -117,10 +117,6 @@ PRODUCT_PACKAGES += \
     libstlport \
     libxml2
 
-# Gello
-PRODUCT_PACKAGES += \
-    Gello
-
 # FlipFlap
 PRODUCT_PACKAGES += \
     FlipFlap
