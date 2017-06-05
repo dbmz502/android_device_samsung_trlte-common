@@ -122,6 +122,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     FlipFlap
 
+# Theme
+PRODUCT_PACKAGES += \
+    ThemeChooser \
+    ThemesProvider \
+    ThemeManagerService \
+    HexoLibre
+
 # TimeKeep
 PRODUCT_PACKAGES += \
     timekeep \
