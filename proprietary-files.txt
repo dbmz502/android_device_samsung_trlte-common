@@ -102,6 +102,7 @@ vendor/lib/libmmcamera_isp_wb40.so
 vendor/lib/libmmcamera_vpu_module.so
 vendor/lib/liboemcamera.so
 vendor/lib/libsensor1.so
+vendor/lib/liboemcrypto.so
 
 # Camera chromatix
 lib/H16UL_libTsAe.so
