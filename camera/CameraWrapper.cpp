@@ -30,7 +30,7 @@
 #include <utils/String8.h>
 #include <utils/threads.h>
 
-#define BACK_CAMERA_ID 0
+#define REAR_CAMERA_ID 0
 #define FRONT_CAMERA_ID 1
 
 using namespace android;
@@ -111,7 +111,7 @@ static char *camera_fixup_getparams(int id, const char *settings)
     params.dump();
 
     /* Rear photos: Remove HDR scene mode */
-    if (id == BACK_CAMERA_ID) {
+    if (id == REAR_CAMERA_ID) {
         params.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES, supportedSceneModes);
     }
 
@@ -140,7 +140,7 @@ static char *camera_fixup_setparams(int id, const char *settings)
     bool isVideo = recordHint && !strcmp(recordHint, "true");
 
     /* Rear videos: Correct camera mode to 0 */
-    if (isVideo && id == BACK_CAMERA_ID) {
+    if (isVideo && id == REAR_CAMERA_ID) {
         params.set(CameraParameters::KEY_CAMERA_MODE, "0");
     }
 
