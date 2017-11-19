@@ -29,7 +29,7 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
-PRODUCT_AAPT_PREBUILT_DPI := xxxhdpi xxhdpi xhdpi hdpi
+PRODUCT_AAPT_PREBUILT_DPI := 560hdpi xxhdpi xhdpi hdpi
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2560
@@ -113,10 +113,8 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    camera.apq8084 \
-    libstlport \
     libxml2 \
-    Snap
+    camera.apq8084
 
 # FlipFlap
 PRODUCT_PACKAGES += \
@@ -150,6 +148,9 @@ PRODUCT_PACKAGES += \
     fingerprintd \
     fingerprint.apq8084 \
     ValidityService
+    
+PRODUCT_PROPERTY_OVERRIDES += \
+fingerprint_enabled=1
 
 # GPS
 PRODUCT_PACKAGES += \
