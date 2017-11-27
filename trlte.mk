@@ -114,7 +114,8 @@ PRODUCT_COPY_FILES += \
 # Camera
 PRODUCT_PACKAGES += \
     libxml2 \
-    camera.apq8084
+    camera.apq8084 \
+    Snap
 
 # FlipFlap
 PRODUCT_PACKAGES += \
@@ -188,7 +189,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    lights.apq8084
+    lights.APQ8084
 
 # Media
 PRODUCT_PACKAGES += \
@@ -241,7 +242,9 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     init.qcom.usb.sh \
     init.sec.boot.sh \
-    ueventd.qcom.rc
+    ueventd.qcom.rc \
+    init.rilduos.rc \
+    init.qcom.ril.sh
 
 # Samsung symbols
 PRODUCT_PACKAGES += \
