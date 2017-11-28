@@ -371,6 +371,21 @@ on early-boot
     
 on boot
 
+    # Enable intelli-thermal for boot
+    write /sys/module/msm_thermal/parameters/enabled 1
+    write /sys/module/msm_thermal/core_control/enabled 1
+    write /sys/module/msm_thermal/parameters/core_control_mask 12
+    write /sys/module/msm_thermal/parameters/freq_control_mask 15
+    write /sys/module/msm_thermal/parameters/limit_temp_degC 70
+    write /sys/module/msm_thermal/parameters/core_limit_temp_degC 75
+
+    # Cpuset
+    write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/foreground/boost/cpus 0-3
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/system-background/cpus 0-3
+    write /dev/cpuctl/cpu.shares 1024
+
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
@@ -603,42 +618,8 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
     chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/param_index
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/param_index
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/bimc_hispeed_freq
-    chmod 0644 /sys/devices/system/cpu/cpufreq/interactive/bimc_hispeed_freq
-
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/enforce_mode
-
     chown system system /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/enforced_mode
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/mode
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/mode
-
-    chown system.system /sys/devices/system/cpu/cpufreq/interactive/multi_enter_load
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/multi_enter_load
-    chown system.system /sys/devices/system/cpu/cpufreq/interactive/multi_enter_time
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/multi_enter_time
-    chown system.system /sys/devices/system/cpu/cpufreq/interactive/multi_exit_load 
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/multi_exit_load 
-
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/multi_exit_time
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/multi_exit_time
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/single_enter_load
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/single_enter_load
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/single_enter_time
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/single_enter_time
-
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/single_exit_load
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/single_exit_load
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/single_exit_time
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/single_exit_time
 
     # SEC PM sysfs node
     chown system radio /sys/devices/system/soc/soc0/soc_iddq
@@ -1397,19 +1378,17 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-
-    for devfreq_gov in /sys/class/devfreq/qcom,cpubw*/governor
-    do
-        echo "cpubw_hwmon" > $devfreq_gov
-    done
-
+    
+    # Enable intelli-thermal for boot
+    write /sys/module/msm_thermal/parameters/enabled 1
     write /sys/module/msm_thermal/core_control/enabled 1
-    write /sys/module/msm_thermal/parameters/enabled "Y"
-    write /sys/module/msm_thermal/parameters/limit_temp_degC 78
-
-    write /sys/module/cpu_boost/parameters/sync_threshold 1497600
+    write /sys/module/msm_thermal/parameters/core_control_mask 12
+    write /sys/module/msm_thermal/parameters/freq_control_mask 15
+    write /sys/module/msm_thermal/parameters/limit_temp_degC 70
+    write /sys/module/msm_thermal/parameters/core_limit_temp_degC 75
 
     # Configure the cpu-boost module
+    write /sys/module/cpu_boost/parameters/sync_threshold 1497600
     write /sys/module/cpu_boost/parameters/boost_ms 10
     write /sys/module/cpu_boost/parameters/input_boost_freq 0
     write /sys/module/cpu_boost/parameters/input_boost_ms 40
@@ -1424,8 +1403,6 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 300000
-
-    setprop ro.qualcomm.perf.cores_online 2
 
     # Set Mode Change Condition
     write /sys/devices/system/cpu/cpufreq/interactive/multi_enter_load 314
@@ -1477,7 +1454,7 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpufreq/interactive/target_loads "50 1400000:60"
     write /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor 300000
     write /sys/devices/system/cpu/cpufreq/interactive/param_index 0
-
+    
     chown root system /sys/devices/system/cpu/mfreq
     chmod 220 /sys/devices/system/cpu/mfreq
     chown root system /sys/devices/system/cpu/cpu1/online
