@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2014 The CyanogenMod Project
+# Copyright (C) 2016 The CyanogenMod Project
 #           (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,6 +50,8 @@ TARGET_NEEDS_GCC_LIBC := true
 
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
+BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_CHARGER_SHOW_PERCENTAGE := true
 
 # CMHW
 BOARD_HARDWARE_CLASS += $(LOCAL_PATH)/cmhw
@@ -116,12 +118,13 @@ USE_DEVICE_SPECIFIC_DATASERVICES := true
 # Qualcomm support
 TARGET_GLOBAL_CFLAGS += -DQCOM_BSP
 TARGET_USES_QCOM_BSP := true
+BOARD_USES_QCOM_HARDWARE := true
 
 # Radio
 BOARD_RIL_CLASS := ../../../device/samsung/trlte-common/ril
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_FSTAB := device/samsung/trlte-common/rootdir/etc/fstab.qcom
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
