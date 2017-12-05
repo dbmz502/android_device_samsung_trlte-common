@@ -97,6 +97,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.core_ctl_max_cpu=4 \
     ro.min_freq_0=300000 \
     ro.qualcomm.perf.cores_online=2
+    
+# Storage
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.sdcardfs=true
 
 # Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
