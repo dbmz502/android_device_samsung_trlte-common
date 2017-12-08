@@ -245,6 +245,7 @@ on post-fs-data
     # MHL
     chown system radio /sys/class/mhl/test_v2
     chown system radio /sys/class/mhl/connection
+    
     # on userdebug and eng builds, permision change mhl sysfs
 on property:ro.debuggable=1
     chmod 0666 /sys/class/mhl/timing
@@ -370,22 +371,7 @@ on early-boot
     rm /data/data/com.android.providers.telephony/shared_prefs/preferred-apn.xml
     
 on boot
-
-    # Enable intelli-thermal for boot
-    write /sys/module/msm_thermal/parameters/enabled 1
-    write /sys/module/msm_thermal/core_control/enabled 1
-    write /sys/module/msm_thermal/parameters/core_control_mask 12
-    write /sys/module/msm_thermal/parameters/freq_control_mask 15
-    write /sys/module/msm_thermal/parameters/limit_temp_degC 70
-    write /sys/module/msm_thermal/parameters/core_limit_temp_degC 75
-
-    # Cpuset
-    write /dev/cpuset/foreground/cpus 0-3
-    write /dev/cpuset/foreground/boost/cpus 0-3
-    write /dev/cpuset/background/cpus 0-1
-    write /dev/cpuset/system-background/cpus 0-3
-    write /dev/cpuctl/cpu.shares 1024
-
+    
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
@@ -1351,6 +1337,13 @@ on property:crypto.driver.load=0
 
 on property:sys.boot_completed=1
     write /sys/block/mmcblk0/queue/scheduler cfq
+    
+    # Cpuset
+    write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/foreground/boost/cpus 0-3
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/system-background/cpus 0-3
+    write /dev/cpuctl/cpu.shares 1024
 
     # Configure the hardware properly
     write /sys/module/lpm_levels/enable_low_power/l2 4
@@ -1374,13 +1367,13 @@ on property:sys.boot_completed=1
     write /sys/module/msm_pm/modes/cpu1/retention/idle_enabled 1
     write /sys/module/msm_pm/modes/cpu2/retention/idle_enabled 1
     write /sys/module/msm_pm/modes/cpu3/retention/idle_enabled 1
-
+    write /sys/devices/system/cpu/cpu0/online 1
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
     
     # Enable intelli-thermal for boot
-    write /sys/module/msm_thermal/parameters/enabled 1
+    write /sys/module/msm_thermal/parameters/enabled 0
     write /sys/module/msm_thermal/core_control/enabled 1
     write /sys/module/msm_thermal/parameters/core_control_mask 12
     write /sys/module/msm_thermal/parameters/freq_control_mask 15
