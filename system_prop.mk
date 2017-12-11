@@ -82,6 +82,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Ril
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.ril_class=trlteRIL
+    
+# Storage
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.fuse_sdcard=true
 
 # Sensors
 PRODUCT_PROPERTY_OVERRIDES += \
