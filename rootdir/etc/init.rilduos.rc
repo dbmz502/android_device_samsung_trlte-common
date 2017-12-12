@@ -17,16 +17,7 @@ service ril-daemon1 /system/bin/rild -l /system/lib/libsec-ril-dsds.so -c 2
     socket rild2 stream 660 root radio
     socket rild-debug2 stream 660 radio system
     user root
-    group radio cache inet misc audio log qcom_diag
-    onrestart restart cpboot-daemon
-    
-# CP2
-service cpboot-daemon /sbin/cbd -d -p 22
-    class main
-    user root
-    group radio cache inet misc audio sdcard_rw log sdcard_r
-    seclabel u:r:cbd:s0
-    onrestart restart ril-daemon1    
+    group radio cache inet misc audio log qcom_diag 
 
 service qcom-ril-sh /system/bin/sh /init.qcom.ril.sh
     class main
